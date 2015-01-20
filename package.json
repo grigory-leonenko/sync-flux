@@ -1,0 +1,23 @@
+{
+  "name": "sync-flux",
+  "version": "0.0.1",
+  "description": "Simple implementation of Flux architecture with Components and Stores sync.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/grigory-leonenko/sync-flux.git"
+  },
+  "keywords": [
+    "flux",
+    "react"
+  ],
+  "author": "Grigory Leonenko",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/grigory-leonenko/sync-flux/issues"
+  },
+  "homepage": "https://github.com/grigory-leonenko/sync-flux"
+}
