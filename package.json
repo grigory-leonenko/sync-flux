@@ -19,5 +19,14 @@
   "bugs": {
     "url": "https://github.com/grigory-leonenko/sync-flux/issues"
   },
-  "homepage": "https://github.com/grigory-leonenko/sync-flux"
+  "homepage": "https://github.com/grigory-leonenko/sync-flux",
+  "devDependencies": {
+    "browserify": "^8.1.1",
+    "gulp": "^3.8.10",
+    "gulp-clean": "^0.3.1",
+    "gulp-streamify": "0.0.5",
+    "gulp-uglify": "^1.1.0",
+    "run-sequence": "^1.0.2",
+    "vinyl-source-stream": "^1.0.0"
+  }
 }
