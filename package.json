@@ -1,8 +1,8 @@
 {
   "name": "sync-flux",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Simple implementation of Flux architecture with Components and Stores sync.",
-  "main": "gulpfile.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
