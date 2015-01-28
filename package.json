@@ -1,6 +1,6 @@
 {
   "name": "sync-flux",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple implementation of Flux architecture with Components and Stores sync.",
   "main": "index.js",
   "scripts": {
