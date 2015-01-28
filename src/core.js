@@ -78,6 +78,7 @@ var Flux = (function(){
         } else {
             this.$syncListeners = [{values: values, cb: cb}]
         };
+        return cb;
     };
 
     /**
@@ -91,7 +92,7 @@ var Flux = (function(){
             if(listener === lst.cb){
                 this.$syncListeners.splice($index, 1);
             };
-        })
+        }.bind(this))
     };
 
     /**
