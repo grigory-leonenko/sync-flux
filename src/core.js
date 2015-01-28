@@ -120,24 +120,25 @@ var Flux = (function(){
                 return _initial;
             },
             componentWillMount: function(){
-                _listener = _self.storeSync(values, this.updateBySync)
-            },
-            updateBySync: function(){
-                var _updated = {};
-                Array.prototype.slice.call(arguments).map(function(arg, $index){
-                    if(Utils.isArray(values)){
-                        _updated[values[$index]] = arg;
-                    } else {
-                        _updated[values] = arg;
-                    }
-                });
-
-                this.setState(_updated);
+                _listener = _self.storeSync(values, updateBySync.bind(this))
             },
             componentWillUnmount: function(){
                 _self.stopSync(_listener);
             }
         }
+
+        function updateBySync(){
+            var _updated = {};
+            Array.prototype.slice.call(arguments).map(function(arg, $index){
+                if(Utils.isArray(values)){
+                    _updated[values[$index]] = arg;
+                } else {
+                    _updated[values] = arg;
+                }
+            });
+
+            this.setState(_updated);
+        };
     }
 
     /**
