@@ -6,6 +6,7 @@ var Flux = (function(){
     // Public store methods
     var _store_methods = {
         listen: listen,
+        dispatch: dispatch,
         emit: emit,
         storeSync: storeSync,
         syncMixin: syncMixin,
