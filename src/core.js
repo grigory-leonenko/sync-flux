@@ -129,6 +129,8 @@ var Flux = (function(){
         }
 
         function updateBySync(){
+            if(this._lifeCycleState !== 'MOUNTED' && this._lifeCycleState !== 'MOUNTING') return;
+
             var _updated = {};
             Array.prototype.slice.call(arguments).map(function(arg, $index){
                 if(Utils.isArray(values)){
