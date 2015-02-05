@@ -89,6 +89,8 @@ var Flux = (function(){
      * */
 
     function stopSync(listener){
+        if(!this.$syncListeners) return;
+
         this.$syncListeners.map(function(lst, $index){
             if(listener === lst.cb){
                 this.$syncListeners.splice($index, 1);
@@ -150,6 +152,8 @@ var Flux = (function(){
      * */
 
     function emit(){
+        if(!this.$syncListeners) return;
+        
         this.$syncListeners.map(function(lst){
             var _arguments = [];
             if(Utils.isArray(lst.values)){
