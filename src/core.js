@@ -153,7 +153,7 @@ var Flux = (function(){
 
     function emit(){
         if(!this.$syncListeners) return;
-        
+
         this.$syncListeners.map(function(lst){
             var _arguments = [];
             if(Utils.isArray(lst.values)){
