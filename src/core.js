@@ -135,14 +135,13 @@ var Flux = (function(){
                         _self.$listeners.splice($index, 1);
                         throw new Error('Error calling action listeners', e);
                     };
-                }.bind(this));
+                });
             };
 
             this.type = 'action';
 
             function caller(){
-                console.log(this, _self)
-                _self.emit(arguments);
+                _self.emit.apply(null, arguments);
             };
 
             Utils.merge(this, caller);
