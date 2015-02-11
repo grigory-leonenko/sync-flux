@@ -7,6 +7,8 @@ var Flux = (function(){
     var _store_methods = {
         listen: listen,
         dispatch: dispatch,
+        listenActions: listenActions,
+        listenAction: listenAction,
         emit: emit,
         storeSync: storeSync,
         syncMixin: syncMixin,
@@ -16,7 +18,8 @@ var Flux = (function(){
     var _flux_methods = {
         listen: listen,
         dispatch: dispatch,
-        createStore: createStore
+        createStore: createStore,
+        createActions: createActions
     };
 
     /**
@@ -28,6 +31,7 @@ var Flux = (function(){
      * */
 
     function listen(event, cb){
+        console.warn('Sync-Flux: Do not use a central dispatcher and listeners will removed in version 0.3.0.');
         var _ctx = this;
         if(typeof event === 'object'){
             for(var i in event){
@@ -38,6 +42,32 @@ var Flux = (function(){
         };
     };
 
+
+    /**
+     * Store method for connection action and listener functions
+     *
+     * @param {actions} actions object
+     * */
+
+    function listenActions(actions){
+        for(var i in actions){
+            if(typeof this[i] === 'function'){
+                actions[i].listen.call(this, this[i]);
+            };
+        };
+    };
+
+    /**
+     * Action listen decorator for store and listener function
+     *
+     * @param {action} action
+     * @param {listener} listener function
+     * */
+
+    function listenAction(action, listener){
+        action.listen.call(this, listener);
+    };
+
     /**
      * Dispatch (emit) event to listeners.
      *
@@ -46,6 +76,7 @@ var Flux = (function(){
      * */
 
     function dispatch(event){
+        console.warn('Sync-Flux: Do not use a central dispatcher and listeners will removed in version 0.3.0.');
         return function(){
             var _arguments = arguments;
             getListeners(event).map(function(listener){
@@ -64,6 +95,62 @@ var Flux = (function(){
     function createStore(fn){
         Utils.merge(_store_methods, fn.prototype);
         return _stores[_stores.push(new fn()) - 1];
+    };
+
+    /**
+     * Actions constructor.
+     *
+     * @param {actions} action name array
+     * @returns actions object.
+     */
+
+    function createActions(actions){
+        var _actions = {};
+
+        if(!Utils.isArray(actions)){
+            console.error('Sync-Flux: actions list must be array', actions);
+        } else {
+            actions.map(function(name){
+                _actions[name] = new action(name);
+            })
+        };
+
+        function action(name){
+            var _self = this;
+            this.$listeners = [];
+
+            this.listen = function(listener){
+                _self.$listeners.push({
+                    ctx: this === _self || typeof this === 'function' ? undefined : this, // Check context of listen function not be self context or decorator function
+                    fn: listener
+                });
+            };
+
+            this.emit = function(){
+                var _args = arguments;
+                _self.$listeners.map(function(listener, $index){
+                    try {
+                        listener.fn.apply(listener.ctx, _args);
+                    } catch (e){
+                        _self.$listeners.splice($index, 1);
+                        throw new Error('Error calling action listeners', e);
+                    };
+                }.bind(this));
+            };
+
+            this.type = 'action';
+
+            function caller(){
+                console.log(this, _self)
+                _self.emit(arguments);
+            };
+
+            Utils.merge(this, caller);
+
+            return caller;
+        };
+
+        return _actions;
     };
 
     /**
